@@ -18,9 +18,6 @@ die() {
 }
 
 case "$cmd" in
-    -h|--help|help|"")
-        printf "%s\n" "usage: shmoji [bemenu | download]"
-        ;;
     download)
         command -v curl > /dev/null || die 'curl not found'
         mkdir -p "$emojidb"
@@ -33,6 +30,9 @@ case "$cmd" in
         command -v wtype > /dev/null || die 'wtype not found'
         emoji=$(cat "$emojidb/emojis.txt" | bemenu -c -W 0.2 -l 20)
         printf "%s" "$emoji" | cut -d " " -f 1 | wtype -
+        ;;
+    *)
+        printf "%s\n" "usage: shmoji [bemenu | download]"
         ;;
 esac
 
