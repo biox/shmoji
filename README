@@ -1,0 +1,12 @@
+shomji 💀
+
+j3s's simple little shell-based emoji picker
+
+usage: shmoji [bemenu | download]
+
+examples:
+  # download emojis
+  shmoji download
+
+  # launch shmoji with bemenu
+  shmoji bemenu
