@@ -10,3 +10,14 @@ examples:
 
   # launch shmoji with bemenu
   shmoji bemenu
+
+  # launch shmoji with fzf
+  shmoji fzf
+
+
+how do i use this in...
+sway/i3:
+  bindsym $mod+Shift+o exec --no-startup-id shmoji bemenu
+
+shell:
+  shmoji fzf

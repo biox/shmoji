@@ -9,12 +9,16 @@
 set -e
 
 cmd="$1"
-emojidb="$HOME/.local/share/emoji-bemenu"
+emojidb="$HOME/.local/share/shmoji"
 emojifile="$emojidb/emojis.txt"
 
 die() {
     printf "%s\n" "$1"
     exit 1
+}
+
+emojicheck() {
+    [ -f "$emojifile" ] || die "emojis not found. try 'shmoji download'"
 }
 
 case "$cmd" in
@@ -26,10 +30,17 @@ case "$cmd" in
         curl 'https://trash.j3s.sh/emojis.txt' >"$emojidb/emojis.txt"
         ;;
     bemenu)
+        emojicheck
         command -v bemenu > /dev/null || die 'bemenu not found'
         command -v wtype > /dev/null || die 'wtype not found'
         emoji=$(cat "$emojidb/emojis.txt" | bemenu -c -W 0.2 -l 20)
         printf "%s" "$emoji" | cut -d " " -f 1 | tr -d '\n' | wtype -
+        ;;
+    fzf)
+        emojicheck
+        command -v fzf > /dev/null || die 'fzf not found'
+        emoji=$(cat "$emojidb/emojis.txt" | fzf)
+        printf "%s" "$emoji" | cut -d " " -f 1 | tr -d '\n'
         ;;
     *)
         printf "%s\n" "usage: shmoji [bemenu | download]"
