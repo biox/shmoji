@@ -1,1 +1,1 @@
-scp emojilist/emojis.txt j3s.sh:/var/www/trash.j3s.sh/emojis.txt
+scp emojis.txt j3s.sh:/var/www/trash.j3s.sh/emojis.txt
