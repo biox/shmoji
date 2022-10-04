@@ -2,9 +2,10 @@
 #
 # shell-based emoji picker
 #
-# deps:
-# - bemenu + wtype
-# - curl, if you wanna download my emoji list
+# deps by command:
+# - shmoji download: curl
+# - shmoji fzf: fzf
+# - shmoji bemenu: bemenu & wtype
 
 set -e
 
