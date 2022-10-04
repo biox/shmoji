@@ -6,6 +6,7 @@
 # - shmoji download: curl
 # - shmoji fzf: fzf
 # - shmoji bemenu: bemenu & wtype
+# - shmoji rofi: rofi & xdotool
 
 set -e
 
@@ -37,6 +38,14 @@ case "$cmd" in
         emoji=$(cat "$emojidb/emojis.txt" | bemenu -c -W 0.2 -l 20)
         printf "%s" "$emoji" | cut -d " " -f 1 | tr -d '\n' | wtype -
         ;;
+    rofi)
+        emojicheck
+        command -v rofi > /dev/null || die 'rofi not found'
+        command -v xdotool > /dev/null || die 'xdotool not found'
+        win=$(xdotool getactivewindow)
+        emoji=$(cat "$emojidb/emojis.txt" | rofi -dmenu | cut -d " " -f 1 | tr -d '\n')
+        [ "$emoji" ] && xdotool windowactivate --sync $win type --clearmodifiers $emoji
+        ;;
     fzf)
         emojicheck
         command -v fzf > /dev/null || die 'fzf not found'
@@ -44,7 +53,7 @@ case "$cmd" in
         printf "%s" "$emoji" | cut -d " " -f 1 | tr -d '\n'
         ;;
     *)
-        printf "%s\n" "usage: shmoji [download | bemenu | fzf]"
+        printf "%s\n" "usage: shmoji [download | bemenu | rofi | fzf]"
         ;;
 esac
 
