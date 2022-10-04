@@ -43,7 +43,7 @@ case "$cmd" in
         printf "%s" "$emoji" | cut -d " " -f 1 | tr -d '\n'
         ;;
     *)
-        printf "%s\n" "usage: shmoji [bemenu | download]"
+        printf "%s\n" "usage: shmoji [download | bemenu | fzf]"
         ;;
 esac
 

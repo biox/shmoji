@@ -2,7 +2,8 @@ shomji 💀
 
 j3s's simple little shell-based emoji picker
 
-usage: shmoji [bemenu | download]
+$ shmoji -h
+usage: [download | bemenu | fzf]
 
 examples:
   # download emojis
