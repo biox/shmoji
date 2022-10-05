@@ -2,9 +2,7 @@ shomji 💀
 
 a little shell-based emoji picker
 
-
-$ demo
-<script id="asciicast-525695" src="https://asciinema.org/a/525695.js" async></script>
+demo: https://asciinema.org/a/525695
 
 
 $ shmoji -h
