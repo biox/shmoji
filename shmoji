@@ -11,12 +11,18 @@
 set -e
 
 cmd="$1"
-emojidb="$HOME/.local/share/shmoji"
-emojifile="$emojidb/emojis.txt"
+emojidir="$HOME/.local/share/shmoji"
+emojifile="$emojidir/emojis.txt"
 
 die() {
     printf "%s\n" "$1"
     exit 1
+}
+
+depends() {
+    for dep in "$@"; do
+        command -v "$dep" > /dev/null || die "$dep not found"
+    done
 }
 
 emojicheck() {
@@ -25,31 +31,29 @@ emojicheck() {
 
 case "$cmd" in
     download)
-        command -v curl > /dev/null || die 'curl not found'
-        mkdir -p "$emojidb"
+        depends curl
+        mkdir -p "$emojidir"
         # $ wc -l /var/www/trash.j3s.sh/emojis.txt 
         # 3570 /var/www/trash.j3s.sh/emojis.txt
-        curl 'https://trash.j3s.sh/emojis.txt' >"$emojidb/emojis.txt"
+        curl 'https://trash.j3s.sh/emojis.txt' >"$emojifile"
         ;;
     bemenu)
         emojicheck
-        command -v bemenu > /dev/null || die 'bemenu not found'
-        command -v wtype > /dev/null || die 'wtype not found'
-        emoji=$(cat "$emojidb/emojis.txt" | bemenu -c -W 0.2 -l 20)
+        depends bemenu wtype
+        emoji=$(cat "$emojifile" | bemenu -c -W 0.2 -l 20)
         printf "%s" "$emoji" | cut -d " " -f 1 | tr -d '\n' | wtype -
         ;;
     rofi)
         emojicheck
-        command -v rofi > /dev/null || die 'rofi not found'
-        command -v xdotool > /dev/null || die 'xdotool not found'
+        depends rofi xdotool
         win=$(xdotool getactivewindow)
-        emoji=$(cat "$emojidb/emojis.txt" | rofi -dmenu | cut -d " " -f 1 | tr -d '\n')
+        emoji=$(cat "$emojifile" | rofi -dmenu | cut -d " " -f 1 | tr -d '\n')
         [ "$emoji" ] && xdotool windowactivate --sync $win type --clearmodifiers $emoji
         ;;
     fzf)
         emojicheck
-        command -v fzf > /dev/null || die 'fzf not found'
-        emoji=$(cat "$emojidb/emojis.txt" | fzf)
+        depends fzf
+        emoji=$(cat "$emojifile" | fzf)
         printf "%s" "$emoji" | cut -d " " -f 1 | tr -d '\n'
         ;;
     *)
