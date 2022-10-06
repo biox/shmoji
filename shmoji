@@ -11,7 +11,7 @@
 set -e
 
 cmd="$1"
-emojidir="$HOME/.local/share/shmoji"
+emojidir="$HOME/.cache/shmoji"
 emojifile="$emojidir/emojis.txt"
 
 die() {
