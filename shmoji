@@ -29,6 +29,10 @@ emojicheck() {
     [ -f "$emojifile" ] || die "emojis not found. try 'shmoji download'"
 }
 
+emojiprint() {
+    printf "%s" "$1" | cut -d " " -f 1 | tr -d '\n'
+}
+
 case "$cmd" in
     download)
         depends curl
@@ -41,7 +45,7 @@ case "$cmd" in
         emojicheck
         depends bemenu wtype
         emoji=$(cat "$emojifile" | bemenu -c -W 0.2 -l 20)
-        printf "%s" "$emoji" | cut -d " " -f 1 | tr -d '\n' | wtype -
+        emojiprint "$emoji" | wtype -
         ;;
     rofi)
         emojicheck
@@ -54,7 +58,7 @@ case "$cmd" in
         emojicheck
         depends fzf
         emoji=$(cat "$emojifile" | fzf)
-        printf "%s" "$emoji" | cut -d " " -f 1 | tr -d '\n'
+        emojiprint "$emoji"
         ;;
     *)
         printf "%s\n" "usage: shmoji [download | bemenu | rofi | fzf]"
