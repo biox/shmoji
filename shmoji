@@ -6,7 +6,9 @@
 # - shmoji download: curl
 # - shmoji fzf: fzf
 # - shmoji bemenu: bemenu & wtype
+# - shmoji dmenu: dmenu-wl
 # - shmoji rofi: rofi & xdotool
+# - shmoji rofi: wofi & wl-copy
 
 set -e
 
@@ -47,6 +49,12 @@ case "$cmd" in
         emoji=$(cat "$emojifile" | bemenu -c -W 0.2 -l 20)
         emojiprint "$emoji" | wtype -
         ;;
+    dmenu)
+        emojicheck
+        depends dmenu-wl
+        emoji=$(cat "$emojifile" | dmenu-wl)
+        emojiprint "$emoji"
+        ;;
     rofi)
         emojicheck
         depends rofi xdotool
@@ -54,6 +62,12 @@ case "$cmd" in
         emoji=$(cat "$emojifile" | rofi -dmenu | cut -d " " -f 1 | tr -d '\n')
         [ "$emoji" ] && xdotool windowactivate --sync $win type --clearmodifiers $emoji
         ;;
+    wofi)
+      emojicheck
+      depends wofi wl-copy
+      emoji=$(cat "$emojifile" | wofi -dS dmenu | cut -d " " -f 1 | tr -d '\n')
+      [ "$emoji" ] && wl-copy $emoji
+      ;;
     fzf)
         emojicheck
         depends fzf
@@ -61,7 +75,7 @@ case "$cmd" in
         emojiprint "$emoji"
         ;;
     *)
-        printf "%s\n" "usage: shmoji [download | bemenu | rofi | fzf]"
+        printf "%s\n" "usage: shmoji [download | bemenu | dmenu | rofi | wofi | fzf]"
         ;;
 esac
 
