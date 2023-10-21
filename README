@@ -15,8 +15,14 @@ examples:
   # launch shmoji with bemenu
   shmoji bemenu
 
+  # launch shmoji with dmenu-wl
+  shmoji dmenu
+
   # launch shmoji with rofi
   shmoji rofi
+
+  # launch shmoji with wofi
+  shmoji wofi
 
   # launch shmoji with fzf
   shmoji fzf
