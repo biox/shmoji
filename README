@@ -6,7 +6,7 @@ demo: https://asciinema.org/a/525695
 
 
 $ shmoji -h
-usage: [download | bemenu | rofi | fzf]
+usage: [download | bemenu | dmenu | rofi | wmenu | fzf]
 
 examples:
   # download emojis
@@ -21,6 +21,9 @@ examples:
   # launch shmoji with rofi
   shmoji rofi
 
+  # launch shmoji with wmenu
+  shmoji wmenu
+
   # launch shmoji with wofi
   shmoji wofi
 
@@ -30,7 +33,7 @@ examples:
 
 how do i use this in...
 sway:
-  bindsym $mod+Shift+o exec --no-startup-id shmoji bemenu
+  bindsym $mod+Shift+o exec --no-startup-id shmoji wmenu
 
 i3:
   bindsym $mod+Shift+o exec --no-startup-id shmoji rofi

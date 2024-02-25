@@ -39,7 +39,7 @@ case "$cmd" in
     download)
         depends curl
         mkdir -p "$emojidir"
-        # $ wc -l /var/www/trash.j3s.sh/emojis.txt 
+        # $ wc -l /var/www/trash.j3s.sh/emojis.txt
         # 3570 /var/www/trash.j3s.sh/emojis.txt
         curl 'https://trash.j3s.sh/emojis.txt' >"$emojifile"
         ;;
@@ -61,6 +61,12 @@ case "$cmd" in
         win=$(xdotool getactivewindow)
         emoji=$(cat "$emojifile" | rofi -dmenu | cut -d " " -f 1 | tr -d '\n')
         [ "$emoji" ] && xdotool windowactivate --sync $win type --clearmodifiers $emoji
+        ;;
+    wmenu)
+        emojicheck
+        depends wmenu wl-copy
+        emoji=$(cat "$emojifile" | wmenu)
+        emojiprint "$emoji" | wl-copy
         ;;
     wofi)
       emojicheck
