@@ -8,7 +8,8 @@
 # - shmoji bemenu: bemenu & wtype
 # - shmoji dmenu: dmenu-wl
 # - shmoji rofi: rofi & xdotool
-# - shmoji rofi: wofi & wl-copy
+# - shmoji wofi: wofi & wl-copy
+# - shmoji tofi: tofi & wl-copy
 
 set -e
 
@@ -74,6 +75,12 @@ case "$cmd" in
       emoji=$(cat "$emojifile" | wofi -dS dmenu | cut -d " " -f 1 | tr -d '\n')
       [ "$emoji" ] && wl-copy $emoji
       ;;
+    tofi)
+      emojicheck
+      depends tofi wl-copy
+      emoji=$(cat "$emojifile" | tofi --prompt-text "Emoji: " | cut -d " " -f 1 | tr -d '\n')
+      [ "$emoji" ] && wl-copy $emoji
+      ;;
     fzf)
         emojicheck
         depends fzf
@@ -81,7 +88,7 @@ case "$cmd" in
         emojiprint "$emoji"
         ;;
     *)
-        printf "%s\n" "usage: shmoji [download | bemenu | dmenu | rofi | wofi | fzf]"
+        printf "%s\n" "usage: shmoji [download | bemenu | dmenu | rofi | wofi | tofi | fzf]"
         ;;
 esac
 
