@@ -6,7 +6,7 @@ demo: https://asciinema.org/a/525695
 
 
 $ shmoji -h
-usage: [download | bemenu | dmenu | rofi | wmenu | fzf]
+usage: [download | bemenu | dmenu | rofi | tofi | wmenu | fzf]
 
 examples:
   # download emojis
@@ -26,6 +26,9 @@ examples:
 
   # launch shmoji with wofi
   shmoji wofi
+
+  # launch shmoji with tofi
+  shmoji tofi
 
   # launch shmoji with fzf
   shmoji fzf
