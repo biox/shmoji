@@ -81,6 +81,12 @@ case "$cmd" in
       emoji=$(cat "$emojifile" | tofi --prompt-text "Emoji: " | cut -d " " -f 1 | tr -d '\n')
       [ "$emoji" ] && wl-copy $emoji
       ;;
+    fuzzel)
+        emojicheck
+        depends fuzzel wl-copy
+        emoji=$(cat "$emojifile" | fuzzel -p "Emoji: " -d | cut -d " " -f 1 | tr -d '\n')
+        [ "$emoji" ] && wl-copy $emoji
+        ;;
     fzf)
         emojicheck
         depends fzf
@@ -88,7 +94,7 @@ case "$cmd" in
         emojiprint "$emoji"
         ;;
     *)
-        printf "%s\n" "usage: shmoji [download | bemenu | dmenu | rofi | wofi | tofi | fzf]"
+        printf "%s\n" "usage: shmoji [download | bemenu | dmenu | rofi | wofi | tofi | fuzzel | fzf]"
         ;;
 esac
 
